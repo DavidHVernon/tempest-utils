@@ -84,7 +84,7 @@ function _initMetaData(parent) {
         }
         else {
             // Set the new objects id
-            if (!parent.id) {
+            if (parent.cls && !parent.id) {
                 parent.id = uuid()
             }
             // Set foreign key relationship (1)
@@ -234,10 +234,12 @@ function diffObjects(origObj, newObj) {
 
     // Modified properties
     setIntersection(origSet, newSet).forEach((key) => {
-        if (!_.isEqual(origObj[key], newObj[key])) {
-            diffObject.oldValue[key] = origObj[key]
-            diffObject.newValue[key] = newObj[key]
-            anyChanges = true
+        if (key != 'meta') {
+            if (!_.isEqual(origObj[key], newObj[key])) {
+                diffObject.oldValue[key] = origObj[key]
+                diffObject.newValue[key] = newObj[key]
+                anyChanges = true
+            }
         }
     })
     // Added properties 
@@ -454,6 +456,12 @@ function newObjectFromClassList(clsList, clsName, props) {
         if (!isMetaData(prop)) {
             obj[prop] = props[prop]
         }
+    }
+    obj.meta = {
+        isPurgable: true,
+        createDate: null,
+        accessDate: null,
+        modifyDate: null
     }
 
     return obj
