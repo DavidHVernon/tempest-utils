@@ -42,9 +42,6 @@ function createTransaction(original, result) {
 
     _initMetaData(result)
 
-    // ??? Why are we copying result/ original at this phase.
-    // Not really sure its necessary. 
-
     const newObjList = flattenTree(_.cloneDeep(result))
     const newObjIdList = _idListFromObjList(newObjList)
     const newObjById = groupByUnique(newObjList, 'id')
@@ -116,7 +113,6 @@ function _initMetaData(parent) {
             obj['cls'] = clsName
         }
     }
-
     // Footnotes:
     // (1) The convention in tempest is that if any object has a property called
     //     [cls]List then that property is
