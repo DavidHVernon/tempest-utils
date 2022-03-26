@@ -294,7 +294,6 @@ function arrayIntersection(A, B) {
     return A.filter((a) => (i.has(a)))
 }
 
-
 function bundleList(list, size) {
     let result = []
     let bundle = []
